@@ -375,7 +375,8 @@ PRODUCT_PACKAGES += \
     libprotobuf-cpp-full \
     libril_shim \
     librmnetctl \
-    libxml2 
+    libxml2 \
+    libjson 
 
 # Vendor libstdc++
 PRODUCT_PACKAGES += \
