@@ -1,1 +1,1 @@
-type vendor_sensors_als_prop, property_type;
+type vendor_sensors_als_prop, vendor_property_type;
