@@ -5,8 +5,15 @@
 #
 
 BUILD_BROKEN_DUP_RULES := true
+BUILD_BROKEN_PREBUILT_ELF_FILES := true
+# Broken Files/Headers
+BUILD_BROKEN_VINTF_PRODUCT_COPY_FILES := true
+BUILD_BROKEN_USES_BUILD_COPY_HEADERS := true
 BUILD_BROKEN_MISSING_REQUIRED_MODULES := true
 BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
+RELAX_USES_LIBRARY_CHECK := true
+BUILD_BROKEN_VENDOR_PROPERTY_NAMESPACE := true
+SELINUX_IGNORE_NEVERALLOWS := true
 
 BOARD_VENDOR := oneplus
 
@@ -17,15 +24,20 @@ TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-2a
 TARGET_CPU_ABI := arm64-v8a
 TARGET_CPU_ABI2 :=
-TARGET_CPU_VARIANT := cortex-a76
+TARGET_CPU_VARIANT := generic
+TARGET_CPU_VARIANT_RUNTIME := cortex-a76
 
 TARGET_2ND_ARCH := arm
 TARGET_2ND_ARCH_VARIANT := armv8-2a
 TARGET_2ND_CPU_ABI := armeabi-v7a
 TARGET_2ND_CPU_ABI2 := armeabi
-TARGET_2ND_CPU_VARIANT := cortex-a76
+TARGET_2ND_CPU_VARIANT := generic
+TARGET_2ND_CPU_VARIANT_RUNTIME := cortex-a76
 
 TARGET_USES_64_BIT_BINDER := true
+
+# Official
+KANGOS_BUILDTYPE := OFFICIAL
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := msmnile
@@ -34,18 +46,16 @@ TARGET_NO_BOOTLOADER := true
 # Kernel
 BOARD_BOOT_HEADER_VERSION := 2
 BOARD_KERNEL_BASE := 0x00000000
-BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom androidboot.console=ttyMSM0 androidboot.memcg=1 lpm_levels.sleep_disabled=1 msm_rtb.filter=0x237 service_locator.enable=1 swiotlb=2048 loop.max_part=7 androidboot.usbcontroller=a600000.dwc3  kpti=off
+BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom androidboot.console=ttyMSM0 androidboot.memcg=1 lpm_levels.sleep_disabled=1 video=vfb:640x400,bpp=32,memsize=3072000 msm_rtb.filter=0x237 service_locator.enable=1 swiotlb=2048 loop.max_part=7 androidboot.usbcontroller=a600000.dwc3
 BOARD_KERNEL_CMDLINE += androidboot.vbmeta.avb_version=1.0 androidboot.selinux=permissive
-BOARD_KERNEL_IMAGE_NAME := Image
+BOARD_KERNEL_IMAGE_NAME := Image-dtb
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_SEPARATED_DTBO := true
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
-TARGET_KERNEL_DEFCONFIG := dora_defconfig
+BOARD_RAMDISK_OFFSET := 0x02000000BOARD_ROOT_EXTRA_FOLDERS := op1 op2
+TARGET_KERNEL_CLANG_COMPILE := true
 TARGET_KERNEL_SOURCE := kernel/oneplus/sm8150
-CLANG_CUSTOM_TOOLCHAIN := dora-clang
-TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-gnu-
-TARGET_KERNEL_CROSS_COMPILE_ARM32_PREFIX := arm-linux-gnueabi-
-TARGET_KERNEL_ADDITIONAL_FLAGS := LLVM=1 AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip LD=ld.lld
+TARGET_KERNEL_CONFIG := vendor/sm8150-perf_defconfig
 
 # Platform
 BOARD_USES_QCOM_HARDWARE := true
@@ -95,7 +105,7 @@ TARGET_USES_QTI_CAMERA_DEVICE := true
 USE_DEVICE_SPECIFIC_CAMERA := true
 
 # FOD
-TARGET_SURFACEFLINGER_FOD_LIB := //hardware/oneplus:libfod_extension.oneplus
+TARGET_SURFACEFLINGER_UDFPS_LIB := //$(VENDOR_PATH):libudfps_extension.oneplus_msmnile
 
 # Display
 MAX_VIRTUAL_DISPLAY_DIMENSION := 4096
@@ -115,8 +125,8 @@ TARGET_ENABLE_MEDIADRM_64 := true
 TARGET_FS_CONFIG_GEN := $(VENDOR_PATH)/config.fs
 
 # Fingerprint
-SOONG_CONFIG_NAMESPACES += ONEPLUS_FOD
-SOONG_CONFIG_ONEPLUS_FOD := POS_X POS_Y SIZE
+#SOONG_CONFIG_NAMESPACES += ONEPLUS_UDFPS
+#SOONG_CONFIG_ONEPLUS_UDFPS := POS_X POS_Y SIZE
 
 # HIDL
 DEVICE_MATRIX_FILE += $(VENDOR_PATH)/compatibility_matrix.xml
@@ -140,12 +150,15 @@ TARGET_COPY_OUT_ODM := odm
 TARGET_COPY_OUT_VENDOR := vendor
 
 # Power
+TARGET_RPM_MASTER_STAT := "/d/rpmh/master_stats"
+TARGET_RPM_STAT := "/d/rpmh/stats"
 TARGET_TAP_TO_WAKE_NODE := "/proc/touchpanel/double_tap_enable"
+TARGET_WLAN_POWER_STAT := "/sys/kernel/wlan/power_stats"
 
 # Recovery
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 BOARD_INCLUDE_RECOVERY_DTBO := true
-TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
+TARGET_RECOVERY_PIXEL_FORMAT := "BGRA_8888"
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 
@@ -156,11 +169,12 @@ ENABLE_VENDOR_RIL_SERVICE := true
 VENDOR_SECURITY_PATCH := 2021-08-01
 
 # SELinux
-include device/qcom/sepolicy_vndr/SEPolicy.mk
+# include device/qcom/sepolicy_vndr/SEPolicy.mk
 
-SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(VENDOR_PATH)/sepolicy/private
-SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += $(VENDOR_PATH)/sepolicy/public
-BOARD_SEPOLICY_DIRS += $(VENDOR_PATH)/sepolicy/vendor
+#SYSTEM_EXT_PRIVATE_SEPOLICY_DIR += $(VENDOR_PATH)/sepolicy/private
+#SYSTEM_EXT_PUBLIC_SEPOLICY_DIR += $(VENDOR_PATH)/sepolicy/public
+#BOARD_VENDOR_SEPOLICY_DIRS += $(VENDOR_PATH)/sepolicy/vendor
+BOARD_SEPOLICY_DIRS += $(VENDOR_PATH)/sepolicy-minimal
 
 # Sensors
 SOONG_CONFIG_NAMESPACES += ONEPLUS_MSMNILE_SENSORS

@@ -152,6 +152,9 @@ ro.hardware.keystore_desede=true
 debug.stagefright.ccodec=1
 debug.stagefright.omx_default_rank=0
 
+# Netflix
+ro.netflix.bsp_rev=Q855-16947-1
+
 # NFC
 ro.camera.notify_nfc=1
 
@@ -182,3 +185,7 @@ persist.vendor.radio.procedure_bytes=SKIP
 persist.vendor.radio.rat_on=combine
 persist.vendor.radio.sib16_support=1
 persist.vendor.radio.uicc_se_enabled=true
+
+# Soc
+ro.soc.manufacturer=Qualcomm
+ro.soc.model=SM8150

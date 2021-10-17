@@ -13,12 +13,20 @@ $(call inherit-product, vendor/oneplus/sm8150-common/sm8150-common-vendor.mk)
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/public.libraries.txt:$(TARGET_COPY_OUT_VENDOR)/etc/public.libraries.txt
 
+# Board
+PRODUCT_USES_QCOM_HARDWARE := true
+PRODUCT_BOARD_PLATFORM := msmnile
+
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlay \
-    $(LOCAL_PATH)/overlay-krypton
+    $(LOCAL_PATH)/overlay-kangos \
+    $(LOCAL_PATH)/overlay-system
 
 PRODUCT_ENFORCE_RRO_TARGETS := *
+
+PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += \
+    $(LOCAL_PATH)/overlay-system
 
 # A/B
 AB_OTA_POSTINSTALL_CONFIG += \
@@ -179,6 +187,7 @@ PRODUCT_PACKAGES += \
     init.qti.ufs.rc \
     init.recovery.qcom.rc \
     init.target.rc \
+    init.temp.rc \
     ueventd.qcom.rc \
     vendor.oem_ftm.rc \
     vendor.oem_ftm_svc_disable.rc
@@ -344,6 +353,13 @@ PRODUCT_PACKAGES += \
     libstagefrighthw \
     libstagefright_softomx.vendor
 
+# OnePlus
+PRODUCT_PACKAGES += \
+    oneplus-fwk
+
+# PRODUCT_BOOT_JARS += \
+#    oneplus-fwk.oneplus_msmnile
+
 # Power
 PRODUCT_PACKAGES += \
     android.hardware.power@1.2.vendor \
@@ -367,7 +383,7 @@ PRODUCT_PACKAGES += \
     libril_shim \
     librmnetctl \
     libxml2 \
-    libjson 
+    libjson
 
 # Vendor libstdc++
 PRODUCT_PACKAGES += \
@@ -401,14 +417,18 @@ PRODUCT_PACKAGES += \
     qti_telephony_hidl_wrapper.xml \
     qti-telephony-utils \
     qti_telephony_utils.xml \
-    telephony-ext \
-    TelephonyResOneplus
+    telephony-ext
 
 PRODUCT_BOOT_JARS += \
     telephony-ext
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-permissions-qti.xml
+
+#AOSiP Device Settings
+PRODUCT_PACKAGES += \
+    DeviceSettings \
+    libsysutils
 
 # Touch
 PRODUCT_PACKAGES += \
@@ -455,9 +475,13 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/wifi/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf \
     $(LOCAL_PATH)/wifi/WCNSS_qcom_cfg.ini:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/WCNSS_qcom_cfg.ini
 
-# WiFi
+# WiFi Display
 PRODUCT_PACKAGES += \
-    WifiResCommon
+    libnl \
+    libwfdaac_vendor
+
+#PRODUCT_BOOT_JARS += \
+#    WfdCommon
 
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.surface_flinger.force_hwc_copy_for_virtual_displays=true \

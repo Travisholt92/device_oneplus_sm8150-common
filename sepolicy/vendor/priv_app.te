@@ -1,15 +1,9 @@
-# Allow priv_app to read files in vendor_sysfs_battery_supply
-r_dir_file(priv_app, vendor_sysfs_battery_supply)
+allow priv_app sysfs_battery_supply:file r_file_perms;
+allow priv_app bt_firmware_file:filesystem getattr;
+allow priv_app device:dir open;
 
-allow priv_app oem_service:service_manager { find };
-
-allow priv_app hal_ifaa_hwservice:hwservice_manager find;
-
-allow priv_app vendor_sysfs_kgsl:file r_file_perms;
-allow priv_app vendor_xdsp_device:chr_file r_file_perms;
-allow priv_app adsprpcd_file:dir r_dir_perms;
-
-binder_call(priv_app, hal_ifaa_default)
-
-allow priv_app hal_cameraHIDL_hwservice:hwservice_manager find;
-binder_call(priv_app, hal_cameraHIDL_default)
+allow priv_app firmware_file:filesystem getattr;
+allow priv_app mnt_vendor_file:dir search;
+dontaudit priv_app bt_firmware_file:filesystem getattr;
+dontaudit priv_app firmware_file:filesystem getattr;
+dontaudit priv_app mnt_vendor_file:dir search;

@@ -1,46 +1,31 @@
 # Audio
 persist.vendor.audio.hac.enable    u:object_r:vendor_audio_prop:s0
 
-# Bluetooth
-persist.vendor.bt.a2dp_offload_cap    u:object_r:bluetooth_a2dp_offload_prop:s0
-
 # Camera
 camera.OPpictureId    u:object_r:vendor_camera_prop:s0
 ro.camera.            u:object_r:vendor_camera_prop:s0
 vendor.camera.        u:object_r:vendor_camera_prop:s0
 
-# Device Info
-ro.vendor.product.device.db               u:object_r:vendor_db_security_prop:s0
-ro.vendor.product.manufacturer.db         u:object_r:vendor_db_security_prop:s0
-
 # Display
 persist.vendor.color.matrix    u:object_r:vendor_display_prop:s0
-
-# Fastbootd
-ro.fastbootd.available                 u:object_r:exported_default_prop:s0
 
 # FTM mode
 ro.boot.ftm_mode    u:object_r:exported_default_prop:s0
 
-# Graphics
-ro.gfx.driver.1    u:object_r:exported3_default_prop:s0
+# Memplus
+persist.vendor.memplus.              u:object_r:exported_system_prop:s0
+vendor.sys.memplus.postboot       u:object_r:vendor_memplus_prop:s0
 
 # NFC
-persist.vendor.ese.          u:object_r:vendor_nfc_prop:s0
-persist.vendor.nfc.          u:object_r:vendor_nfc_prop:s0
-persist.nfc.                 u:object_r:vendor_nfc_prop:s0
-persist.vendor.oem.nfc.      u:object_r:vendor_nfc_prop:s0
-ro.vendor.nfc.notify_tp      u:object_r:vendor_nfc_prop:s0
-vendor.oem.nfc.              u:object_r:vendor_nfc_prop:s0
-persist.factoryota.reboot    u:object_r:vendor_nfc_prop:s0
-persist.vendor.nfc.delayese  u:object_r:vendor_nfc_prop:s0
+persist.vendor.nfc.        u:object_r:vendor_nfc_prop:s0
+persist.nfc.               u:object_r:vendor_nfc_prop:s0
+persist.vendor.oem.nfc.    u:object_r:vendor_nfc_prop:s0
+ro.vendor.nfc.notify_tp    u:object_r:vendor_nfc_prop:s0
+vendor.oem.nfc.            u:object_r:vendor_nfc_prop:s0
+persist.factoryota.reboot  u:object_r:vendor_nfc_prop:s0
 
 # Param
 ro.boot.prmec    u:object_r:exported_default_prop:s0
-ro.boot.prmfc    u:object_r:vendor_param_prop:s0
-ro.boot.prmuc    u:object_r:vendor_param_prop:s0
-ro.boot.stg      u:object_r:vendor_param_prop:s0
-ro.boot.msz      u:object_r:vendor_param_prop:s0
 
 # RF version
 ro.boot.rf_version    u:object_r:exported_default_prop:s0
@@ -64,4 +49,8 @@ persist.vendor.sensors.enable.mag_filter         u:object_r:vendor_sensors_prop:
 persist.vendor.sensors.light.location_x          u:object_r:vendor_sensors_prop:s0
 persist.vendor.sensors.light.location_y          u:object_r:vendor_sensors_prop:s0
 persist.vendor.sensors.proximity.using_motion    u:object_r:vendor_sensors_prop:s0
-vendor.sensors.als_correction.                   u:object_r:vendor_sensors_als_prop:s0
+sys.night_mode.enabled                           u:object_r:powerctl_prop:s0
+sys.night_mode.color_temperature                 u:object_r:powerctl_prop:s0
+
+# Thermal
+vendor.thermal.config      u:object_r:vendor_thermal_prop:s0

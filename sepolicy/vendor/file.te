@@ -14,7 +14,6 @@ type proc_ultrasound, fs_type, proc_type;
 # rootfs
 type op1_file, file_type;
 type op2_file, file_type;
-type opf_file, file_type;
 
 # sockets
 type vl53l1_socket, file_type;
@@ -24,7 +23,7 @@ type sysfs_aod, sysfs_type, fs_type;
 type sysfs_dtb_model, sysfs_type, fs_type;
 type sysfs_fod, sysfs_type, fs_type;
 type sysfs_fpc, sysfs_type, fs_type;
-type sysfs_oem, sysfs_type, fs_type;
+type sysfs_fsc, sysfs_type, fs_type;
 type sysfs_project_info, sysfs_type, fs_type;
 type sysfs_tri_state_key, sysfs_type, fs_type;
 type sysfs_vl53l1, sysfs_type, fs_type;
